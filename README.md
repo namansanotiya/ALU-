@@ -1,37 +1,33 @@
+# FPU — Floating Point Unit (IEEE-754)
 
-FPU — Floating Point Unit (IEEE-754)
+A hardware implementation of IEEE-754 single-precision (32-bit) Floating Point Unit in Verilog.
+
+## Operations
+| op | Operation |
+|----|-----------|
+| 00 | Add |
+| 01 | Subtract |
+| 10 | Multiply |
+| 11 | FMA (Fused Multiply-Add) |
+
+## Project Structure
+```
 FPU/
 ├── rtl/
-│   ├── fp_defs.vh                  # Constants and parameters
-│   ├── fp_unpack.v                 # Unpack IEEE-754 to sign/exp/mantissa
-│   ├── fp_pack.v                   # Pack sign/exp/mantissa to IEEE-754
-│   ├── lzc48.v                     # Leading Zero Counter (normalization)
-│   ├── fp_round_nearest_even.v     # IEEE round-to-nearest-even
-│   ├── fp_add_simple.v             # Floating point adder/subtractor
-│   ├── fp_mul_simple.v             # Floating point multiplier
-│   ├── fp_fma_simple.v             # Fused Multiply-Add unit
-│   └── simple_fpu_top.v            # Top-level module
+│   ├── fp_defs.vh
+│   ├── fp_unpack.v
+│   ├── fp_pack.v
+│   ├── lzc48.v
+│   ├── fp_round_nearest_even.v
+│   ├── fp_add_simple.v
+│   ├── fp_mul_simple.v
+│   ├── fp_fma_simple.v
+│   └── simple_fpu_top.v
 ├── tb/
-│   └── tb_simple_fpu.v             # Testbench
+│   └── tb_simple_fpu.v
 ├── docs/
-│   └── (notes and diagrams)
 └── README.md
+```
 
-
-Datapath Flow
-INPUT (a, b, c)
-      ↓
-   UNPACK
-(sign, exponent, mantissa)
-      ↓
-SPECIAL CASE CHECK
-(NaN, Inf, Zero, Subnormal)
-      ↓
-ARITHMETIC UNIT
-(add / subtract / multiply / FMA)
-      ↓
-  NORMALIZE
-      ↓
-    ROUND
-      ↓
-  PACK RESULT
+## Datapath
+INPUT → UNPACK → SPECIAL CASE CHECK → ARITHMETIC → NORMALIZE → ROUND → PACK
